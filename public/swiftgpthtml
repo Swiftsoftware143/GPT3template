@@ -1,0 +1,49 @@
+
+<html><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Form</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col w-full max-w-xs mx-auto">
+        <div class="mb-4 text-center">
+            <label class="block text-grey-darker text-sm font-bold mb-2" for="input">
+                Motivational Quote
+            </label>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="input" type="text" placeholder="Enter your motivational quote">
+        </div>
+        <div class="flex items-center justify-center">
+            <button class="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded" onclick="sendAjax()">
+                Submit
+            </button>
+        </div>
+        <div id="result" class="mt-6 text-grey-darker"></div>
+    </div>
+
+    <script>
+        function sendAjax() {
+            const input = document.getElementById('input').value;
+            fetch('/api/request', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ input }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerText = data;
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body></html>
